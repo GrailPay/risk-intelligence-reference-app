@@ -1,0 +1,5 @@
+[MASTER]
+ignore=.venv,migrations,.git,__pycache__
+
+[MESSAGES CONTROL]
+disable=missing-module-docstring,missing-function-docstring,missing-class-docstring,too-few-public-methods,import-outside-toplevel,missing-timeout
