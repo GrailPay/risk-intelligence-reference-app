@@ -1,0 +1,8 @@
+import os
+
+
+class Config:
+    VERIFY_ACCOUNT_ROUTING_BASE_URL = os.getenv("VERIFY_ACCOUNT_ROUTING_BASE_URL", "")
+    VERIFY_ACCOUNT_ROUTING_ACCESS_TOKEN = os.getenv(
+        "VERIFY_ACCOUNT_ROUTING_ACCESS_TOKEN", ""
+    )
