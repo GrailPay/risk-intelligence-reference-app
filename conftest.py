@@ -4,6 +4,7 @@ import pytest
 
 from app import create_app
 
+
 @pytest.fixture
 def test_app() -> Generator:
     app = create_app()

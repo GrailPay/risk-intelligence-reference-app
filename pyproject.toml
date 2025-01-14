@@ -1,0 +1,10 @@
+[tool.black]
+line-length = 88
+exclude = '''
+/(
+    \.venv          # Virtual environments
+  | .git            # Git directory
+  | migrations      # Flask migrations
+  | __pycache__     # Python cache files
+)/
+'''
