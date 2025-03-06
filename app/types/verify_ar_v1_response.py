@@ -1,6 +1,6 @@
 from typing import TypedDict
 
 
-class VerifyResponse(TypedDict):
+class VerifyARV1Response(TypedDict):
     status: bool
     result: str
