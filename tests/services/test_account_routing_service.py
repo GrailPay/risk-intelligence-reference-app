@@ -5,12 +5,12 @@ from flask import Flask
 from app.services.account_routing_service import AccountRoutingService
 
 
-def test_verify_ar_v1(test_app: Flask) -> None:  # pylint: disable=unused-argument
-    access_token = os.getenv("VERIFY_ACCOUNT_ROUTING_ACCESS_TOKEN", "")
-
+def test_verify_ar_v1(
+    test_app: Flask, ri_access_token: str
+) -> None:  # pylint: disable=unused-argument
     # Check valid response
 
-    service = AccountRoutingService(access_token)
+    service = AccountRoutingService(ri_access_token)
     response = service.verify_ar_v1(
         account_number="11101010", routing_number="053200983"
     )
@@ -21,7 +21,7 @@ def test_verify_ar_v1(test_app: Flask) -> None:  # pylint: disable=unused-argume
 
     # Check invalid response
 
-    service = AccountRoutingService(access_token)
+    service = AccountRoutingService(ri_access_token)
     response = service.verify_ar_v1(
         account_number="11101011", routing_number="061103852"
     )
@@ -32,7 +32,7 @@ def test_verify_ar_v1(test_app: Flask) -> None:  # pylint: disable=unused-argume
 
     # Check not validated response
 
-    service = AccountRoutingService(access_token)
+    service = AccountRoutingService(ri_access_token)
     response = service.verify_ar_v1(
         account_number="11101015", routing_number="061103852"
     )
@@ -42,10 +42,8 @@ def test_verify_ar_v1(test_app: Flask) -> None:  # pylint: disable=unused-argume
     assert response["result"] == "not_validated"
 
 
-def test_verify_ar_v2(test_app: Flask):
-    access_token = os.getenv("VERIFY_ACCOUNT_ROUTING_ACCESS_TOKEN", "")
-
-    service = AccountRoutingService(token=access_token)
+def test_verify_ar_v2(test_app: Flask, ri_access_token: str) -> None:
+    service = AccountRoutingService(token=ri_access_token)
     response = service.verify_ar_v2(
         account_number="11101010", routing_number="053200983"
     )
@@ -54,7 +52,7 @@ def test_verify_ar_v2(test_app: Flask):
     assert response["confidence_level"] == "high"
     assert response["risk_score"] == 0.642
 
-    service = AccountRoutingService(access_token)
+    service = AccountRoutingService(ri_access_token)
     response = service.verify_ar_v2(
         account_number="11101011", routing_number="061103852"
     )
@@ -63,7 +61,7 @@ def test_verify_ar_v2(test_app: Flask):
     assert response["confidence_level"] == "high"
     assert response["risk_score"] == 0.61
 
-    service = AccountRoutingService(access_token)
+    service = AccountRoutingService(ri_access_token)
     response = service.verify_ar_v2(
         account_number="11101015", routing_number="061103852"
     )
