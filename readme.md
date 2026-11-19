@@ -47,12 +47,14 @@ pytest
 
 #### Account Routing Verify service
 
+Use the access token returned by `/v1/auth`. Choose `/v1/verify-ar` for basic verification or `/v2/verify-ar` for the risk score.
+
 ```shell
-curl -X POST http://localhost:3000/verify \
+curl -X POST http://localhost:3000/v2/verify-ar \
+-H "Authorization: Bearer $GRAILPAY_ACCESS_TOKEN" \
 -H "Content-Type: application/json" \
 -d '{
   "account_number": "your_account_number",
-  "routing_number": "your_routing_number",
-  "token": "your_token"
+  "routing_number": "your_routing_number"
 }'
 ```

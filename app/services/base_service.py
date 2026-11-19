@@ -9,7 +9,7 @@ class BaseService(ABC):
     def _post(
         self, url: str, payload: Dict[str, Any], headers: Dict[str, str]
     ) -> requests.Response:
-        current_app.logger.info(f"Sending POST request to {url} with payload {payload}")
+        current_app.logger.info("Sending POST request to %s", url)
         response = requests.post(url, json=payload, headers=headers)
         return response
 

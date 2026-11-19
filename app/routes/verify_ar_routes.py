@@ -4,7 +4,6 @@ from flask import Blueprint, jsonify, request
 from pydantic import ValidationError
 
 from app.services.account_routing_service import AccountRoutingService
-from app.services.auth_service import AuthService
 from app.validators.verify_ar_request import VerifyARRequest
 
 verify_ar_bp = Blueprint("verify_ar", __name__)
@@ -30,7 +29,17 @@ def _handle_verification_request(
     except ValidationError as e:
         return jsonify({"error": e.errors()}), 400
 
-    service = AccountRoutingService()
+    authorization = request.authorization
+    if (
+        authorization is None
+        or authorization.type != "bearer"
+        or not authorization.token
+    ):
+        response = jsonify({"error": "Missing bearer token"})
+        response.headers["WWW-Authenticate"] = "Bearer"
+        return response, 401
+
+    service = AccountRoutingService(token=authorization.token)
     result = getattr(service, service_method)(
         account_number=validated_data.account_number,
         routing_number=validated_data.routing_number,
